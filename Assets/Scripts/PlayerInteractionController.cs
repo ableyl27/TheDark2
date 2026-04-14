@@ -10,9 +10,12 @@ public class PlayerInteractionController : MonoBehaviour
 
     public static event Action<string> OnInteractableFound;
 
-    private Collider[] GetInteractable()
+    private Collider GetInteractable()
     {
-        return Physics.OverlapSphere(transform.position, interactionRadius, interactableLayers);
+    
+    Collider[] hits = Physics.OverlapSphere(transform.position, interactionRadius, interactableLayers);
+    return hits.Length > 0 ? hits[0] : null;
+    
     }
 
     private void OnInteract()
@@ -39,8 +42,8 @@ public class PlayerInteractionController : MonoBehaviour
             Debug.Log("no object found");
             return;
         }
-        Key key = hit.GetComponent<key>();
-        if(key == null)
+        key foundKey = hit.GetComponent<key>();
+        if(foundKey == null)
         {
             Debug.Log("no key found");
             return;
