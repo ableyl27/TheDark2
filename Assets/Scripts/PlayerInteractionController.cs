@@ -49,6 +49,7 @@ public class PlayerInteractionController : MonoBehaviour
             if(isHoldingKey() && door.CanOpen(keyInHand))
             {
                 door.Open();
+                Destroy(keyInHand);
                 return;
             }
             Debug.Log("need a key");
