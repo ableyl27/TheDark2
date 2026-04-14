@@ -42,6 +42,19 @@ public class PlayerInteractionController : MonoBehaviour
             Debug.Log("no object found");
             return;
         }
+
+        Door door = hit.GetComponent<Door>();
+        if(door != null)
+        {
+            if(isHoldingKey() && door.CanOpen(keyInHand))
+            {
+                door.Open();
+                return;
+            }
+            Debug.Log("need a key");
+            return;
+        }
+
         key foundKey = hit.GetComponent<key>();
         if(foundKey == null)
         {
