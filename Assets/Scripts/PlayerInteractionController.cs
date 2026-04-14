@@ -53,6 +53,7 @@ public class PlayerInteractionController : MonoBehaviour
 
     }
 
+
     private void PickUpKey(GameObject key)
     {
         keyInHand = key;
