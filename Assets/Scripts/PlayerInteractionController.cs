@@ -12,21 +12,14 @@ public class PlayerInteractionController : MonoBehaviour
 
     private Collider GetInteractable()
     {
-    
-    Collider[] hits = Physics.OverlapSphere(transform.position, interactionRadius, interactableLayers);
-    return hits.Length > 0 ? hits[0] : null;
-    
+        Collider[] hits = Physics.OverlapSphere(transform.position, interactionRadius, interactableLayers);
+        return hits.Length > 0 ? hits[0] : null;
     }
 
     private void OnInteract()
     {
         Debug.Log("Test Interaction");
-        if (isHoldingKey())
-        {
-            DropKey();
-            return;
-        }
-        TryPickUpKey();
+        TryInteract();
     }
 
     private bool isHoldingKey()
@@ -34,12 +27,19 @@ public class PlayerInteractionController : MonoBehaviour
         return keyInHand != null;
     }
 
-    private void TryPickUpKey()
+    private void TryInteract()
     {
         Collider hit = GetInteractable();
         if(hit == null)
         {
-            Debug.Log("no object found");
+            if(isHoldingKey())
+            {
+                DropKey();
+            }
+            else
+            {
+                Debug.Log("no object found");
+            }
             return;
         }
 
@@ -62,20 +62,18 @@ public class PlayerInteractionController : MonoBehaviour
             return;
         }
        
-       PickUpKey(hit.gameObject);
-
+        PickUpKey(hit.gameObject);
     }
-
 
     private void PickUpKey(GameObject key)
     {
         keyInHand = key;
-
         key.transform.SetParent(transform);
     }
 
     private void DropKey()
     {
-        //later
+        keyInHand.transform.SetParent(null);
+        keyInHand = null;
     }
 }
