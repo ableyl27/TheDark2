@@ -3,7 +3,7 @@ using System;
 
 public class PlayerInteractionController : MonoBehaviour
 {
-    private GameObject keyInHand; 
+    public GameObject keyInHand; 
 
     [SerializeField] private float interactionRadius;
     [SerializeField] private LayerMask interactableLayers;
@@ -18,11 +18,11 @@ public class PlayerInteractionController : MonoBehaviour
 
     private void OnInteract()
     {
-        Debug.Log("Test Interaction");
+        //Debug.Log("Test Interaction");
         TryInteract();
     }
 
-    private bool isHoldingKey()
+    public bool isHoldingKey()
     {
         return keyInHand != null;
     }
@@ -30,43 +30,16 @@ public class PlayerInteractionController : MonoBehaviour
     private void TryInteract()
     {
         Collider hit = GetInteractable();
-        if(hit == null)
-        {
-            if(isHoldingKey())
-            {
-                DropKey();
-            }
-            else
-            {
-                Debug.Log("no object found");
-            }
-            return;
-        }
+        if(hit == null) { return; }
 
-        Door door = hit.GetComponent<Door>();
-        if(door != null)
+        IInteractable interactable = hit.GetComponent<IInteractable>();
+        if(interactable != null)
         {
-            if(isHoldingKey() && door.CanOpen(keyInHand))
-            {
-                door.Open();
-                Destroy(keyInHand);
-                return;
-            }
-            Debug.Log("need a key");
-            return;
+            interactable.Interact(this);
         }
-
-        key foundKey = hit.GetComponent<key>();
-        if(foundKey == null)
-        {
-            Debug.Log("no key found");
-            return;
-        }
-       
-        PickUpKey(hit.gameObject);
     }
 
-    private void PickUpKey(GameObject key)
+    public void PickUpKey(GameObject key)
     {
         keyInHand = key;
         key.transform.SetParent(transform);

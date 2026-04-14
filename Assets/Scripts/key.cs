@@ -1,16 +1,9 @@
 using UnityEngine;
 
-public class key : MonoBehaviour
+public class key : MonoBehaviour, IInteractable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Interact(PlayerInteractionController player)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        player.PickUpKey(gameObject);
     }
 }
