@@ -31,9 +31,22 @@ public class PlayerMovementController : MonoBehaviour
 
         controller.Move(moveDirection * moveSpeed * Time.deltaTime);
 
+         // AI
+         /*
         if (moveDirection.magnitude > 0.1f)
         {
-            transform.forward = moveDirection;
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 3f * Time.deltaTime);
         }
-    }
+        */
+        }
+        // AI
+
+        //old
+        /*
+        if (moveDirection.magnitude > 0.1f)
+        {
+        transform.forward = moveDirection;
+        }
+        */
 }
