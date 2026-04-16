@@ -5,6 +5,9 @@ public class PlayerMovementController : MonoBehaviour
 
     public float moveSpeed = 5f;
 
+    public float mouseSensitivity = 200f;
+    private float xRotation = 0f;
+
     public Transform cameraTransform;
 
     private CharacterController controller;
@@ -12,6 +15,9 @@ public class PlayerMovementController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
@@ -30,6 +36,15 @@ public class PlayerMovementController : MonoBehaviour
         Vector3 moveDirection = forward * moveZ + right * moveX;
 
         controller.Move(moveDirection * moveSpeed * Time.deltaTime);
+
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -80f, 80f);
+
+        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f); // eyes tilts up/down
+        transform.Rotate(Vector3.up * mouseX); // whole player rotates left/right
 
          // AI
          /*
