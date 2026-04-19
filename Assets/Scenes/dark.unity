@@ -3105,6 +3105,10 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 1728333614}
+    - target: {fileID: 2092858846277006859, guid: 8c24990818109486aa77a30ad72561db, type: 3}
+      propertyPath: mouseSensitivity
+      value: 400
+      objectReference: {fileID: 0}
     - target: {fileID: 3373523970695846154, guid: 8c24990818109486aa77a30ad72561db, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.56
