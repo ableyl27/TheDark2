@@ -16,6 +16,27 @@ public class PlayerInteractionController : MonoBehaviour
         return hits.Length > 0 ? hits[0] : null;
     }
 
+    private void Update()
+    {
+        CheckForInteractable();
+    }
+
+    private void CheckForInteractable()
+    {
+        Collider hit = GetInteractable();
+        if (hit != null)
+        {
+            IInteractable interactable = hit.GetComponent<IInteractable>();
+            if (interactable != null)
+            {
+                OnInteractableFound?.Invoke("Press E");
+                return;
+            }
+
+        }
+
+        OnInteractableFound?.Invoke("");
+    }
     private void OnInteract()
     {
         //Debug.Log("Test Interaction");
