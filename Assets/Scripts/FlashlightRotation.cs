@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class MouseLookController : MonoBehaviour
+public class FlashlightRotation : MonoBehaviour
 {
     public float mouseSensitivity = 200f;
 
-    public Transform playerBody;
+    [SerializeField] private Transform playerBody;
+    [SerializeField] private Transform flashlight;
 
     float xRotation = 0f;
 

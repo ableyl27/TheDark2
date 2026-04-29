@@ -6,7 +6,8 @@ public class Door : MonoBehaviour, IInteractable
     
     public bool CanOpen(GameObject heldKey)
     {
-        return heldKey.CompareTag("key");
+        return heldKey.CompareTag(requiredKeyTag);
+        
     }
 
     public void Interact(PlayerInteractionController player)
