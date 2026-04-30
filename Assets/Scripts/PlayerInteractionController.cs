@@ -12,7 +12,7 @@ public class PlayerInteractionController : MonoBehaviour
 
     private Collider GetInteractable()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, interactionRadius, interactableLayers);
+        Collider[] hits = Physics.OverlapSphere(transform.position + Vector3.up * 1f, interactionRadius, interactableLayers);
         return hits.Length > 0 ? hits[0] : null;
     }
 
@@ -26,7 +26,7 @@ public class PlayerInteractionController : MonoBehaviour
         Collider hit = GetInteractable();
         if (hit != null)
         {
-            IInteractable interactable = hit.GetComponent<IInteractable>();
+            IInteractable interactable = hit.GetComponentInParent<IInteractable>();
             if (interactable != null)
             {
                 OnInteractableFound?.Invoke("Press E");
@@ -59,6 +59,14 @@ public class PlayerInteractionController : MonoBehaviour
             interactable.Interact(this);
         }
     }
+
+    //AI use to check interaction sphere
+    private void OnDrawGizmos()
+{
+    Gizmos.color = Color.yellow;
+    Gizmos.DrawWireSphere(transform.position + Vector3.up * 1f, interactionRadius);
+}
+    //end of AI
 
     public void PickUpKey(GameObject key)
     {

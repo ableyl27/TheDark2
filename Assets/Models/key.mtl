@@ -1,0 +1,7 @@
+# The Dark — Key Material
+newmtl KeyMaterial
+Ka 0.20 0.14 0.00
+Kd 0.78 0.57 0.16
+Ks 0.90 0.70 0.30
+Ns 80.0
+illum 2
