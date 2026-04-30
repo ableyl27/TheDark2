@@ -3,13 +3,17 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PlayerDamageController : MonoBehaviour
 {
+    public static event Action OnPlayerDeath;
 
     [SerializeField] private float playerHealth = 100f;
     [SerializeField] private Scrollbar healthBar;
     [SerializeField] private GameObject gameOverMenu;
+
+    
 
     private bool isDead = false;
 
@@ -45,14 +49,10 @@ public class PlayerDamageController : MonoBehaviour
     {
         isDead = true;
         Debug.Log("Player died");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         if (gameOverMenu != null)
-        {
-            gameOverMenu.SetActive(true);
-            Time.timeScale = 0f;
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        OnPlayerDeath?.Invoke();
     }
 
     public void RestartGame()
