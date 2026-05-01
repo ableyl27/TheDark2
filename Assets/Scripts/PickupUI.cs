@@ -3,8 +3,10 @@ using TMPro;
 using System.Collections;
 public class PickupUI : MonoBehaviour
 {
-    //[SerializeField] private TextMeshProUGUI pickupText;
+    [SerializeField] private GameObject pickupText;
     [SerializeField] private GameObject pickupUI;
+
+    private bool hasPickedUpKey = false;
 
     private void OnEnable()
     {
@@ -18,31 +20,26 @@ public class PickupUI : MonoBehaviour
 
     private void ShowMessage(string message)
     {
+        StopAllCoroutines();
         StartCoroutine(ShowRoutine(message));
     }
 
     private IEnumerator ShowRoutine(string message)
     {
-        //pickupText.text = message;
-        //pickupText.gameObject.SetActive(true);
-        pickupUI.SetActive(true);
 
-        //Debug.Log("Panel active: " + pickupUI.activeSelf);
+         pickupUI.SetActive(true);
+
+        if (!hasPickedUpKey)
+        {
+            pickupText.SetActive(true);
+            hasPickedUpKey = true;
+        }
 
         yield return new WaitForSeconds(1.5f);
-
-        //pickupText.gameObject.SetActive(false);
+       
         pickupUI.SetActive(false);
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+        pickupText.SetActive(false);
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

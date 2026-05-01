@@ -14,7 +14,7 @@ public class PlayerInteractionController : MonoBehaviour
     public static event Action<string> OnInteractableFound;
     public static event Action<string> OnItemPickedUp;
 
-    private bool hasPickedUpKey = false;
+
 
     private IInteractable GetInteractable()
     {   
@@ -61,7 +61,6 @@ public class PlayerInteractionController : MonoBehaviour
     }
     private void OnInteract()
     {
-        //Debug.Log("Test Interaction");
         TryInteract();
     }
 
@@ -85,18 +84,10 @@ public class PlayerInteractionController : MonoBehaviour
     }
 
     public void PickUpKey(GameObject key)
-    {
+    {  
         keyInHand = key;
         key.transform.SetParent(transform);
-        if(!hasPickedUpKey)
-        {
         OnItemPickedUp?.Invoke("Key picked up! Press F to drop.");
-        hasPickedUpKey = true;
-        }
-        else
-        {
-            OnItemPickedUp?.Invoke("Key picked up!");
-        }
     }
 
     private void DropKey()
