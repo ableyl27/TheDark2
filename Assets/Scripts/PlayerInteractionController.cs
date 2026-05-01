@@ -14,6 +14,8 @@ public class PlayerInteractionController : MonoBehaviour
     public static event Action<string> OnInteractableFound;
     public static event Action<string> OnItemPickedUp;
 
+    private bool hasPickedUpKey = false;
+
     private IInteractable GetInteractable()
     {   
         Ray ray = new Ray(playerCamera.transform.position + playerCamera.transform.forward, playerCamera.transform.forward);
@@ -74,6 +76,9 @@ public class PlayerInteractionController : MonoBehaviour
 
         if (interactable != null)
         {
+            if (isHoldingKey() && interactable is key)
+                return;
+
             interactable.Interact(this);
         }
         
@@ -83,7 +88,15 @@ public class PlayerInteractionController : MonoBehaviour
     {
         keyInHand = key;
         key.transform.SetParent(transform);
-        OnItemPickedUp?.Invoke("Key picked up!");
+        if(!hasPickedUpKey)
+        {
+        OnItemPickedUp?.Invoke("Key picked up! Press F to drop.");
+        hasPickedUpKey = true;
+        }
+        else
+        {
+            OnItemPickedUp?.Invoke("Key picked up!");
+        }
     }
 
     private void DropKey()
@@ -91,4 +104,13 @@ public class PlayerInteractionController : MonoBehaviour
         keyInHand.transform.SetParent(null);
         keyInHand = null;
     }
+
+    private void OnDrop()
+    {
+        if(isHoldingKey())
+        {
+            DropKey();
+        }
+    }
+
 }
