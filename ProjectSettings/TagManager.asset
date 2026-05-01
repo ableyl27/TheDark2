@@ -7,6 +7,10 @@ TagManager:
   - key
   - Enemy
   - key_2
+  - BlueKey
+  - RedKey
+  - GreenKey
+  - WhiteKey
   layers:
   - Default
   - TransparentFX
