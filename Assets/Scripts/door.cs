@@ -22,26 +22,16 @@ public class Door : MonoBehaviour, IInteractable
         {
             if (CanOpen(player.keyInHand))
             {
+                Destroy(player.keyInHand);
+                player.keyInHand = null;
                 isLocked = false;
-                //Debug.Log("Door unlocked");
             }
             else
             {
-                //Debug.Log("Door is locked");
                 return;
             }
         }
         Open();
-        // if(player.isHoldingKey() && CanOpen(player.keyInHand))
-        // {
-        //     Destroy(player.keyInHand);
-        //     player.keyInHand = null;
-        //     Open();
-        // }
-        // else
-        // {
-        //     Debug.Log("need a key");
-        // }
     }
 
     public string GetInteractText(PlayerInteractionController player)
@@ -64,6 +54,6 @@ public class Door : MonoBehaviour, IInteractable
     public void Open()
     {
         Destroy(gameObject);
-
+        
     }
 }

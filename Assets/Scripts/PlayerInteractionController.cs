@@ -48,7 +48,7 @@ public class PlayerInteractionController : MonoBehaviour
 
             if (current != null)
             {
-                Debug.Log("INTERACTABLE: " + current.GetInteractText(this));
+                //Debug.Log("INTERACTABLE: " + current.GetInteractText(this));
                 OnInteractableFound?.Invoke(current.GetInteractText(this));
             }
             else
@@ -76,23 +76,8 @@ public class PlayerInteractionController : MonoBehaviour
         {
             interactable.Interact(this);
         }
-        // Collider hit = GetInteractable();
-        // if(hit == null) { return; }
-
-        // IInteractable interactable = hit.GetComponent<IInteractable>();
-        // if(interactable != null)
-        // {
-        //     interactable.Interact(this);
-        // }
+        
     }
-
-    //AI use to check interaction sphere
-//     private void OnDrawGizmos()
-// {
-//     Gizmos.color = Color.yellow;
-//     Gizmos.DrawWireSphere(transform.position + Vector3.up * 1f, interactionRadius);
-// }
-    //end of AI
 
     public void PickUpKey(GameObject key)
     {
