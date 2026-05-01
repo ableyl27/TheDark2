@@ -16,13 +16,13 @@ public class PlayerInteractionController : MonoBehaviour
 
     private IInteractable GetInteractable()
     {   
-        Ray ray = new Ray(playerCamera.transform.position + playerCamera.transform.forward * 0.1f, playerCamera.transform.forward);
+        Ray ray = new Ray(playerCamera.transform.position + playerCamera.transform.forward, playerCamera.transform.forward);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, interactDistance, interactableLayers))
         {
             Debug.Log("Ray hit: " + hit.collider.name);
-            return hit.collider.GetComponentInParent<IInteractable>();
+            return hit.transform.GetComponentInParent<IInteractable>();
         }
 
         return null;
@@ -31,9 +31,10 @@ public class PlayerInteractionController : MonoBehaviour
         // return hits.Length > 0 ? hits[0] : null;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * interactDistance, Color.red);
+        
+        //Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * interactDistance, Color.red);
         CheckForInteractable();
     }
     private IInteractable lastInteractable;
@@ -47,8 +48,8 @@ public class PlayerInteractionController : MonoBehaviour
 
             if (current != null)
             {
-                Debug.Log("INTERACTABLE: " + current.GetInteractText());
-                OnInteractableFound?.Invoke(current.GetInteractText());
+                Debug.Log("INTERACTABLE: " + current.GetInteractText(this));
+                OnInteractableFound?.Invoke(current.GetInteractText(this));
             }
             else
             {
@@ -86,11 +87,11 @@ public class PlayerInteractionController : MonoBehaviour
     }
 
     //AI use to check interaction sphere
-    private void OnDrawGizmos()
-{
-    Gizmos.color = Color.yellow;
-    Gizmos.DrawWireSphere(transform.position + Vector3.up * 1f, interactionRadius);
-}
+//     private void OnDrawGizmos()
+// {
+//     Gizmos.color = Color.yellow;
+//     Gizmos.DrawWireSphere(transform.position + Vector3.up * 1f, interactionRadius);
+// }
     //end of AI
 
     public void PickUpKey(GameObject key)
