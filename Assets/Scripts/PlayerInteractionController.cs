@@ -3,39 +3,58 @@ using System;
 
 public class PlayerInteractionController : MonoBehaviour
 {
+
     public GameObject keyInHand; 
 
+    [SerializeField] private float interactDistance = 3f;
+    [SerializeField] private Camera playerCamera;
     [SerializeField] private float interactionRadius;
     [SerializeField] private LayerMask interactableLayers;
 
     public static event Action<string> OnInteractableFound;
+    public static event Action<string> OnItemPickedUp;
 
-    private Collider GetInteractable()
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position + Vector3.up * 1f, interactionRadius, interactableLayers);
-        return hits.Length > 0 ? hits[0] : null;
+    private IInteractable GetInteractable()
+    {   
+        Ray ray = new Ray(playerCamera.transform.position + playerCamera.transform.forward * 0.1f, playerCamera.transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, interactDistance, interactableLayers))
+        {
+            Debug.Log("Ray hit: " + hit.collider.name);
+            return hit.collider.GetComponentInParent<IInteractable>();
+        }
+
+        return null;
+
+        // Collider[] hits = Physics.OverlapSphere(transform.position + Vector3.up * 1f, interactionRadius, interactableLayers);
+        // return hits.Length > 0 ? hits[0] : null;
     }
 
     private void Update()
     {
+        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * interactDistance, Color.red);
         CheckForInteractable();
     }
-
+    private IInteractable lastInteractable;
     private void CheckForInteractable()
     {
-        Collider hit = GetInteractable();
-        if (hit != null)
+        IInteractable current = GetInteractable();
+
+        if (current != lastInteractable)
         {
-            IInteractable interactable = hit.GetComponentInParent<IInteractable>();
-            if (interactable != null)
+            lastInteractable = current;
+
+            if (current != null)
             {
-                OnInteractableFound?.Invoke("Press E");
-                return;
+                Debug.Log("INTERACTABLE: " + current.GetInteractText());
+                OnInteractableFound?.Invoke(current.GetInteractText());
             }
-
+            else
+            {
+                OnInteractableFound?.Invoke("");
+            }
         }
-
-        OnInteractableFound?.Invoke("");
     }
     private void OnInteract()
     {
@@ -50,14 +69,20 @@ public class PlayerInteractionController : MonoBehaviour
 
     private void TryInteract()
     {
-        Collider hit = GetInteractable();
-        if(hit == null) { return; }
+        IInteractable interactable = GetInteractable();
 
-        IInteractable interactable = hit.GetComponent<IInteractable>();
-        if(interactable != null)
+        if (interactable != null)
         {
             interactable.Interact(this);
         }
+        // Collider hit = GetInteractable();
+        // if(hit == null) { return; }
+
+        // IInteractable interactable = hit.GetComponent<IInteractable>();
+        // if(interactable != null)
+        // {
+        //     interactable.Interact(this);
+        // }
     }
 
     //AI use to check interaction sphere
@@ -72,6 +97,7 @@ public class PlayerInteractionController : MonoBehaviour
     {
         keyInHand = key;
         key.transform.SetParent(transform);
+        OnItemPickedUp?.Invoke("Key picked up!");
     }
 
     private void DropKey()

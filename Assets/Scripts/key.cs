@@ -6,4 +6,9 @@ public class key : MonoBehaviour, IInteractable
     {
         player.PickUpKey(gameObject);
     }
+
+    public string GetInteractText()
+    {
+        return "Press E to pick up key";
+    }
 }

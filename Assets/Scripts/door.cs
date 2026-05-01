@@ -3,25 +3,56 @@ using UnityEngine;
 public class Door : MonoBehaviour, IInteractable
 {
     public string requiredKeyTag;
+
+    [SerializeField] private bool isLocked = true;
     
     public bool CanOpen(GameObject heldKey)
     {
+        if (heldKey == null)
+        {
+            return false;
+        }
         return heldKey.CompareTag(requiredKeyTag);
         
     }
 
     public void Interact(PlayerInteractionController player)
+
     {
-        if(player.isHoldingKey() && CanOpen(player.keyInHand))
+
+        if (isLocked)
         {
-            Destroy(player.keyInHand);
-            player.keyInHand = null;
-            Open();
+            if (CanOpen(player.keyInHand))
+            {
+                isLocked = false;
+                Debug.Log("Door unlocked");
+            }
+            else
+            {
+                Debug.Log("Door is locked");
+                return;
+            }
         }
-        else
+        Open();
+        // if(player.isHoldingKey() && CanOpen(player.keyInHand))
+        // {
+        //     Destroy(player.keyInHand);
+        //     player.keyInHand = null;
+        //     Open();
+        // }
+        // else
+        // {
+        //     Debug.Log("need a key");
+        // }
+    }
+
+    public string GetInteractText()
+    {
+        if (isLocked)
         {
-            Debug.Log("need a key");
+            return "Locked (need key)";
         }
+        return "Press E to open door";
     }
 
     public void Open()
