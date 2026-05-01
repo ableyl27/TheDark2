@@ -10,6 +10,8 @@ public class PlayerInteractionController : MonoBehaviour
     [SerializeField] private Camera playerCamera;
     [SerializeField] private float interactionRadius;
     [SerializeField] private LayerMask interactableLayers;
+    [SerializeField] private AudioClip keyPickUpSound;
+    [SerializeField] private AudioSource audioSource;
 
     public static event Action<string> OnInteractableFound;
     public static event Action<string> OnItemPickedUp;
@@ -92,6 +94,7 @@ public class PlayerInteractionController : MonoBehaviour
         key.transform.SetParent(transform);
         key.SetActive(false);
         OnKeyPickedUp?.Invoke();
+        audioSource.PlayOneShot(keyPickUpSound);
         OnItemPickedUp?.Invoke("Key picked up! Press F to drop.");
     }
 
