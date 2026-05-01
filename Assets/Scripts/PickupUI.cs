@@ -5,17 +5,31 @@ public class PickupUI : MonoBehaviour
 {
     [SerializeField] private GameObject pickupText;
     [SerializeField] private GameObject pickupUI;
+    [SerializeField] private GameObject keyIndicator;
 
     private bool hasPickedUpKey = false;
 
     private void OnEnable()
     {
         PlayerInteractionController.OnItemPickedUp += ShowMessage;
+        PlayerInteractionController.OnKeyPickedUp += ShowKeyIndicator;
+        PlayerInteractionController.OnKeyDropped += HideKeyIndicator;
     }
 
     private void OnDisable()
     {
         PlayerInteractionController.OnItemPickedUp -= ShowMessage;
+        PlayerInteractionController.OnKeyPickedUp -= ShowKeyIndicator;
+        PlayerInteractionController.OnKeyDropped -= HideKeyIndicator;
+    }
+
+    private void ShowKeyIndicator()
+    {
+        keyIndicator.SetActive(true);
+    }
+    private void HideKeyIndicator()
+    {
+        keyIndicator.SetActive(false);
     }
 
     private void ShowMessage(string message)
@@ -35,11 +49,14 @@ public class PickupUI : MonoBehaviour
             hasPickedUpKey = true;
         }
 
+
         yield return new WaitForSeconds(1.5f);
        
         pickupUI.SetActive(false);
         pickupText.SetActive(false);
 
     }
+
+        
 
 }

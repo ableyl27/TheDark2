@@ -14,6 +14,9 @@ public class PlayerInteractionController : MonoBehaviour
     public static event Action<string> OnInteractableFound;
     public static event Action<string> OnItemPickedUp;
 
+    public static event Action OnKeyPickedUp;
+    public static event Action OnKeyDropped;
+
 
 
     private IInteractable GetInteractable()
@@ -87,12 +90,16 @@ public class PlayerInteractionController : MonoBehaviour
     {  
         keyInHand = key;
         key.transform.SetParent(transform);
+        key.SetActive(false);
+        OnKeyPickedUp?.Invoke();
         OnItemPickedUp?.Invoke("Key picked up! Press F to drop.");
     }
 
     private void DropKey()
     {
         keyInHand.transform.SetParent(null);
+        keyInHand.SetActive(true);
+        OnKeyDropped?.Invoke();
         keyInHand = null;
     }
 
