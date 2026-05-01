@@ -50,15 +50,15 @@ public class Door : MonoBehaviour, IInteractable
         {
             if (CanOpen(player.keyInHand))
             {
-                return "Press E to use key";
+                return "press E to use key";
             }
             else
             {
-                return "Locked (need key)";
+                return "locked (need key)";
             }
     
         }
-        return "Press E to open door";
+        return "press E to open door";
     }
 
     public void Open()
