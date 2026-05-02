@@ -1,23 +1,32 @@
 using UnityEngine;
+using System.Collections;
 
 public class Door : MonoBehaviour, IInteractable
 {
+    [Header("Settings")]
     public string requiredKeyTag;
-
     [SerializeField] private bool isLocked = true;
-    
+    private bool isOpening = false;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip unlockDoor;
+    [SerializeField] private AudioClip doorLocked;
+    [SerializeField] private AudioSource audioSource;
+
+    [Header("Animation")]
+    [SerializeField] private Animator doorAnimator;
+
     public bool CanOpen(GameObject heldKey)
     {
         if (heldKey == null)
-        {
             return false;
-        }
         return heldKey.CompareTag(requiredKeyTag);
-        
     }
 
     public void Interact(PlayerInteractionController player)
     {
+        if (isOpening) return;
+
         if (isLocked)
         {
             if (CanOpen(player.keyInHand))
@@ -25,13 +34,26 @@ public class Door : MonoBehaviour, IInteractable
                 Destroy(player.keyInHand);
                 player.keyInHand = null;
                 isLocked = false;
+                audioSource.PlayOneShot(unlockDoor);
+                isOpening = true;
+                OpenDoor();
+                player.UseKey();
             }
             else
             {
-                return;
+                audioSource.PlayOneShot(doorLocked);
             }
         }
-        Open();
+        else
+        {
+            isOpening = true;
+            OpenDoor();
+        }
+    }
+
+    private void OpenDoor()
+    {
+        doorAnimator.SetBool("isOpen", true);
     }
 
     public string GetInteractText(PlayerInteractionController player)
@@ -39,21 +61,10 @@ public class Door : MonoBehaviour, IInteractable
         if (isLocked)
         {
             if (CanOpen(player.keyInHand))
-            {
                 return "press E to use key";
-            }
             else
-            {
                 return "locked (need key)";
-            }
-    
         }
         return "press E to open door";
-    }
-
-    public void Open()
-    {
-        Destroy(gameObject);
-        
     }
 }

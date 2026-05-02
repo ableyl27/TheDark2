@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -7138059882213656676}
   - component: {fileID: -6812452484441210923}
   m_Layer: 6
-  m_Name: door
+  m_Name: door 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,6 +132,7 @@ MonoBehaviour:
   unlockDoor: {fileID: 8300000, guid: e30807fb898564bcaa8b3f416a845478, type: 3}
   doorLocked: {fileID: 8300000, guid: cd170b05312b34a49b58f63d37d5b093, type: 3}
   audioSource: {fileID: -7138059882213656676}
+  doorAnimator: {fileID: 0}
 --- !u!82 &-7138059882213656676
 AudioSource:
   m_ObjectHideFlags: 0

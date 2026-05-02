@@ -13,6 +13,16 @@ public class PlayerDamageController : MonoBehaviour
     [SerializeField] private Scrollbar healthBar;
     [SerializeField] private GameObject gameOverMenu;
 
+    [SerializeField] private AudioClip takeDamage;
+    [SerializeField] private AudioSource audioSource;
+
+    [Header("Healing")]
+    [SerializeField] private float healRate = 5f;
+    [SerializeField] private float healInterval = 1f;
+    [SerializeField] private float healDelay = 3f;
+
+    private Coroutine healCoroutine;
+
     
 
     private bool isDead = false;
@@ -33,17 +43,36 @@ public class PlayerDamageController : MonoBehaviour
         {
             return;
         }
-        Debug.Log("Enemy Collision");
+        //Debug.Log("Enemy Collision");
         playerHealth -= damage;
+        Debug.Log("Health: " + playerHealth);
+        audioSource.PlayOneShot(takeDamage);
         healthBar.size = playerHealth/100f;
         if (playerHealth <= 0)
          {
             Die();
-
+            return;
          }
+
+        if (healCoroutine != null)
+            StopCoroutine(healCoroutine);
+        healCoroutine = StartCoroutine(HealOverTime());
+    
             
     
     }
+
+    private IEnumerator HealOverTime()
+    {
+        yield return new WaitForSeconds(healDelay);
+
+        while (playerHealth < 100f && !isDead)
+    {
+        playerHealth = Mathf.Min(playerHealth + healRate, 100f);
+        healthBar.size = playerHealth / 100f;
+        yield return new WaitForSeconds(healInterval);
+    }
+}
 
     void Die()
     {

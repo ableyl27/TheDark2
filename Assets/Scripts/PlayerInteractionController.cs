@@ -13,11 +13,14 @@ public class PlayerInteractionController : MonoBehaviour
     [SerializeField] private AudioClip keyPickUpSound;
     [SerializeField] private AudioSource audioSource;
 
+    
+
     public static event Action<string> OnInteractableFound;
     public static event Action<string> OnItemPickedUp;
 
     public static event Action OnKeyPickedUp;
     public static event Action OnKeyDropped;
+    public static event Action OnKeyUsed;
 
 
 
@@ -112,6 +115,11 @@ public class PlayerInteractionController : MonoBehaviour
         {
             DropKey();
         }
+    }
+
+    public void UseKey()
+    {
+        OnKeyUsed?.Invoke();
     }
 
 }

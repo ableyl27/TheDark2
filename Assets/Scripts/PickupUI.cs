@@ -14,6 +14,7 @@ public class PickupUI : MonoBehaviour
         PlayerInteractionController.OnItemPickedUp += ShowMessage;
         PlayerInteractionController.OnKeyPickedUp += ShowKeyIndicator;
         PlayerInteractionController.OnKeyDropped += HideKeyIndicator;
+        PlayerInteractionController.OnKeyUsed += HideKeyIndicator;
     }
 
     private void OnDisable()
@@ -21,6 +22,7 @@ public class PickupUI : MonoBehaviour
         PlayerInteractionController.OnItemPickedUp -= ShowMessage;
         PlayerInteractionController.OnKeyPickedUp -= ShowKeyIndicator;
         PlayerInteractionController.OnKeyDropped -= HideKeyIndicator;
+        PlayerInteractionController.OnKeyUsed -= HideKeyIndicator;
     }
 
     private void ShowKeyIndicator()
