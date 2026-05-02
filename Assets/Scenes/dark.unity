@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 1.2499119, g: 1.2499119, b: 1.2499119, a: 1}
+  m_AmbientSkyColor: {r: 0.021839378, g: 0.021839378, b: 0.021839378, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -8264,15 +8264,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1381052094821257288, guid: dd81cdd7e9def41498f223f1205efdfe, type: 3}
       propertyPath: m_Intensity
-      value: 50
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1381052094821257288, guid: dd81cdd7e9def41498f223f1205efdfe, type: 3}
       propertyPath: m_SpotAngle
-      value: 70
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1381052094821257288, guid: dd81cdd7e9def41498f223f1205efdfe, type: 3}
       propertyPath: m_InnerSpotAngle
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1381052094821257288, guid: dd81cdd7e9def41498f223f1205efdfe, type: 3}
       propertyPath: m_BounceIntensity
@@ -19358,8 +19358,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractionController
   keyInHand: {fileID: 0}
-  interactDistance: 3
   playerCamera: {fileID: 330585545}
+  interactDistance: 3
   interactionRadius: 3
   interactableLayers:
     serializedVersion: 2

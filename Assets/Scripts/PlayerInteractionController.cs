@@ -6,14 +6,18 @@ public class PlayerInteractionController : MonoBehaviour
 
     public GameObject keyInHand; 
 
-    [SerializeField] private float interactDistance = 3f;
+    [Header("Camera")]
     [SerializeField] private Camera playerCamera;
+
+    [Header("Interaction")]
+    [SerializeField] private float interactDistance = 3f;
     [SerializeField] private float interactionRadius;
     [SerializeField] private LayerMask interactableLayers;
+
+    [Header("Audio")]
     [SerializeField] private AudioClip keyPickUpSound;
     [SerializeField] private AudioSource audioSource;
 
-    
 
     public static event Action<string> OnInteractableFound;
     public static event Action<string> OnItemPickedUp;

@@ -5,8 +5,8 @@ public class Door : MonoBehaviour, IInteractable
 {
     [Header("Settings")]
     public string requiredKeyTag;
-    [SerializeField] private bool isLocked = true;
     private bool isOpening = false;
+    [SerializeField] private bool isLocked = true;
 
     [Header("Audio")]
     [SerializeField] private AudioClip unlockDoor;
