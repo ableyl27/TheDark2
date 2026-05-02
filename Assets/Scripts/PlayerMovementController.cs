@@ -9,9 +9,18 @@ public class PlayerMovementController : MonoBehaviour
     private CharacterController controller;
     private float xRotation = 0f;
 
+    private Vector3 knockbackVelocity;
+    private float knockbackDuration;
+
     
     public float gravity = -9.81f;
     private Vector3 velocity; 
+
+    public void ApplyKnockback(Vector3 direction, float force, float duration)
+    {
+        knockbackVelocity = direction * force;
+        knockbackDuration = duration;
+    }
  
 
     void Start()
@@ -59,5 +68,12 @@ public class PlayerMovementController : MonoBehaviour
 
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
+
+        if (knockbackDuration > 0)
+        {
+            controller.Move(knockbackVelocity * Time.deltaTime);
+            knockbackDuration -= Time.deltaTime;
+            return;
+        }
     }
 }
