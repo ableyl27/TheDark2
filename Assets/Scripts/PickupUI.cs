@@ -75,6 +75,7 @@ public class PickupUI : MonoBehaviour
         {
             pickupText.SetActive(true);
             hasPickedUpKey = true;
+            
         }
 
 
@@ -82,6 +83,7 @@ public class PickupUI : MonoBehaviour
        
         pickupUI.SetActive(false);
         pickupText.SetActive(false);
+        
 
     }
 
