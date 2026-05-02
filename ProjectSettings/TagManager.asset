@@ -12,6 +12,7 @@ TagManager:
   - GreenKey
   - WhiteKey
   - OrangeKey
+  - Final_Key
   layers:
   - Default
   - TransparentFX
