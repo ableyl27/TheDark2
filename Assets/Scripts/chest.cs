@@ -46,7 +46,6 @@ public class chest : MonoBehaviour, IInteractable
 
         if (player.keyInHand != null && player.keyInHand.CompareTag(requiredKeyTag))
             return "Press E to open chest";
-
-        return "Locked (need key)";
+            return "Locked (need key)";
     }
 }

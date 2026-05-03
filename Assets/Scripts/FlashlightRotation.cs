@@ -1,5 +1,7 @@
 using UnityEngine;
 
+//AI USED
+
 public class FlashlightRotation : MonoBehaviour
 {
     public float mouseSensitivity = 200f;
@@ -9,14 +11,13 @@ public class FlashlightRotation : MonoBehaviour
 
     float xRotation = 0f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
          Cursor.lockState = CursorLockMode.Locked;
          Cursor.visible = false;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
