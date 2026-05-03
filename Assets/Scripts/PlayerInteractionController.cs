@@ -22,7 +22,7 @@ public class PlayerInteractionController : MonoBehaviour
     public static event Action<string> OnInteractableFound;
     public static event Action<string> OnItemPickedUp;
 
-    public static event Action OnKeyPickedUp;
+    public static event Action<GameObject> OnKeyPickedUp;
     public static event Action OnKeyDropped;
     public static event Action OnKeyUsed;
 
@@ -40,15 +40,10 @@ public class PlayerInteractionController : MonoBehaviour
         }
 
         return null;
-
-        // Collider[] hits = Physics.OverlapSphere(transform.position + Vector3.up * 1f, interactionRadius, interactableLayers);
-        // return hits.Length > 0 ? hits[0] : null;
     }
 
     private void FixedUpdate()
     {
-        
-        //Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * interactDistance, Color.red);
         CheckForInteractable();
     }
     private IInteractable lastInteractable;
@@ -62,7 +57,6 @@ public class PlayerInteractionController : MonoBehaviour
 
             if (current != null)
             {
-                //Debug.Log("INTERACTABLE: " + current.GetInteractText(this));
                 OnInteractableFound?.Invoke(current.GetInteractText(this));
             }
             else
@@ -100,7 +94,9 @@ public class PlayerInteractionController : MonoBehaviour
         keyInHand = key;
         key.transform.SetParent(transform);
         key.SetActive(false);
-        OnKeyPickedUp?.Invoke();
+
+        OnKeyPickedUp?.Invoke(key);
+
         audioSource.PlayOneShot(keyPickUpSound);
         OnItemPickedUp?.Invoke("Key picked up! Press F to drop.");
     }

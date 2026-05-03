@@ -42,6 +42,7 @@ public class Door : MonoBehaviour, IInteractable
             else
             {
                 audioSource.PlayOneShot(doorLocked);
+         
             }
         }
         else
