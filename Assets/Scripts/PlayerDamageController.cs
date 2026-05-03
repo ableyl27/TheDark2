@@ -21,7 +21,11 @@ public class PlayerDamageController : MonoBehaviour
     [SerializeField] private float healInterval = 1f;
     [SerializeField] private float healDelay = 3f;
 
+    public DamageFlashUI damageFlashUI;
+
     private Coroutine healCoroutine;
+
+    public PauseMenu pauseMenu;
 
     
 
@@ -45,6 +49,7 @@ public class PlayerDamageController : MonoBehaviour
         }
         //Debug.Log("Enemy Collision");
         playerHealth -= damage;
+        damageFlashUI.TriggerDamageFlash();
         Debug.Log("Health: " + playerHealth);
         audioSource.PlayOneShot(takeDamage);
         healthBar.size = playerHealth/100f;
@@ -76,6 +81,7 @@ public class PlayerDamageController : MonoBehaviour
 
     void Die()
     {
+        pauseMenu.SetGameOver();
         isDead = true;
         Debug.Log("Player died");
         Cursor.visible = true;
