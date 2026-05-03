@@ -14,18 +14,12 @@ public class PickupUI : MonoBehaviour
 
     [SerializeField] private string requiredKeyName;
 
+    public PauseMenu pauseMenu;
+
     private Coroutine specialKeyRoutine;
     private bool hasPickedUpKey = false;
 
-    private enum UIState
-    {
-        None,
-        Message,
-        KeyIndicator,
-        ChestOpened,
-        WrongKey,
-        SpecialKey
-    }
+    private enum UIState {None, Message, KeyIndicator, ChestOpened, WrongKey, SpecialKey}
 
     private UIState currentState = UIState.None;
     private Coroutine activeRoutine;
@@ -81,10 +75,8 @@ public class PickupUI : MonoBehaviour
 
     private void ShowChestOpened()
     {
-        RunUIRoutine(
-            UIState.ChestOpened,
-            ShowPanelRoutine(chestOpenedPanel, UIState.ChestOpened, 3f)
-        );
+        chestOpenedPanel.SetActive(true);
+        
     }
 
     private void ShowWrongKey()

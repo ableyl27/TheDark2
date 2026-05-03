@@ -83,7 +83,6 @@ public class PlayerDamageController : MonoBehaviour
     {
         pauseMenu.SetGameOver();
         isDead = true;
-        Debug.Log("Player died");
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         if (gameOverMenu != null)

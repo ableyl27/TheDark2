@@ -13,7 +13,7 @@ public class DamageFlashUI : MonoBehaviour
     public float fadeOutTime = 0.7f;
 
     [Range(0f, 1f)]
-    public float maxAlpha = 0.2f; // 👈 NEW (controls translucency)
+    public float maxAlpha = 0.2f;
 
     private Coroutine flashRoutine;
     private Color baseColor;
@@ -42,6 +42,7 @@ public class DamageFlashUI : MonoBehaviour
         yield return StartCoroutine(Fade(maxAlpha, 0f, fadeOutTime));
     }
 
+    #region
     private IEnumerator Fade(float start, float end, float duration)
     {
         float elapsed = 0f;
@@ -66,4 +67,5 @@ public class DamageFlashUI : MonoBehaviour
         c.a = alpha;
         damageOverlay.color = c;
     }
+    #endregion
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (isGameOver) return; // 🚨 BLOCK ALL PAUSE INPUT
+        if (isGameOver) return;
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -43,7 +44,7 @@ public class PauseMenu : MonoBehaviour
         if (isGameOver) return;
 
         pauseMenu.SetActive(false);
-        Time.timeScale = 1;
+        Time.timeScale = 1f;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -51,19 +52,12 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMenuButton()
     {
-        Time.timeScale = 1; // safety reset
+        Time.timeScale = 1;
         SceneManager.LoadScene("Start");
     }
 
-    // Call this when player dies
     public void SetGameOver()
     {
         isGameOver = true;
-
-        pauseMenu.SetActive(false);
-        Time.timeScale = 0;
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
     }
 }
